@@ -1,0 +1,109 @@
+:root {
+    --page-bg: #f4f7fb;
+    --ink: #162033;
+    --muted: #62708a;
+    --panel: #ffffff;
+    --line: #dce3ee;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--page-bg);
+    color: var(--ink);
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.page-shell {
+    padding: 56px 0;
+}
+
+.eyebrow {
+    color: #0d6efd;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.form-panel,
+.table-wrap {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    box-shadow: 0 16px 40px rgba(22, 32, 51, 0.08);
+}
+
+.form-panel {
+    padding: 32px;
+}
+
+.form-label {
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.form-control {
+    border-color: var(--line);
+    padding: 0.75rem 0.85rem;
+}
+
+.form-control:focus {
+    border-color: #6ea8fe;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.12);
+}
+
+.table-wrap {
+    overflow: hidden;
+}
+
+.student-table {
+    --bs-table-hover-bg: #f7faff;
+}
+
+.student-table tbody tr {
+    transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.student-table td,
+.student-table th {
+    padding: 1rem;
+}
+
+.table thead th {
+    background: #eef4ff;
+    color: #31415f;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.badge.text-bg-light {
+    border: 1px solid var(--line);
+    color: #31415f !important;
+}
+
+.action-btn {
+    align-items: center;
+    display: inline-flex;
+    gap: 0.35rem;
+    white-space: nowrap;
+}
+
+.alert {
+    border-radius: 8px;
+}
+
+@media (max-width: 575.98px) {
+    .page-shell {
+        padding: 32px 0;
+    }
+
+    .form-panel {
+        padding: 22px;
+    }
+
+    .action-btn span {
+        display: none;
+    }
+}
