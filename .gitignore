@@ -9,5 +9,3 @@ instance/
 .coverage
 htmlcov/
 .DS_Store
-screenshots/*
-!screenshots/.gitkeep
