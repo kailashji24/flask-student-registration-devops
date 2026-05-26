@@ -12,17 +12,29 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t flask-student-app .'
+                bat 'docker build -t flask-student-app .'
+            }
+        }
+
+        stage('Stop Old Container') {
+            steps {
+                bat 'docker stop flask-student-container || exit 0'
+                bat 'docker rm flask-student-container || exit 0'
             }
         }
 
         stage('Run Docker Container') {
             steps {
-                sh '''
-                docker stop flask-student-container || true
-                docker rm flask-student-container || true
-                docker run -d -p 5000:5000 --name flask-student-container flask-student-app
-                '''
+                bat '''
+docker run -d ^
+--name flask-student-container ^
+-p 5000:5000 ^
+-e DB_HOST=host.docker.internal ^
+-e DB_USER=root ^
+-e DB_PASSWORD=Root123 ^
+-e DB_NAME=student_registration ^
+flask-student-app
+'''
             }
         }
     }
