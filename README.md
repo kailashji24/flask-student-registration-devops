@@ -118,18 +118,18 @@ Create a .env file using the provided .env.example file.
 Example:
 
 ```env
-SECRET_KEY=mysecretkey123
+SECRET_KEY=replace-with-secret-key
 
-DB_USER=student_app
-DB_PASSWORD=student123
+DB_USER=replace-with-db-user
+DB_PASSWORD=replace-with-db-password
 DB_NAME=student_registration
 DB_HOST=mysql
 DB_PORT=3306
 
-MYSQL_ROOT_PASSWORD=root123
+MYSQL_ROOT_PASSWORD=replace-with-root-password
 MYSQL_DATABASE=student_registration
-MYSQL_USER=student_app
-MYSQL_PASSWORD=student123
+MYSQL_USER=replace-with-db-user
+MYSQL_PASSWORD=replace-with-db-password
 ```
 
 ---
