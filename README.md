@@ -1,309 +1,289 @@
-# Flask Student Registration DevOps Project
+# Student Registration DevOps Platform
 
-## Project Overview
+A production-style Student Registration Management System built using Flask, MySQL, SQLAlchemy, Docker, Docker Compose, and Jenkins.
 
-This project is a Flask-based Student Registration CRUD application integrated with DevOps tools and practices such as Docker, Jenkins, GitHub, and CI/CD pipeline automation.
-
-The application allows users to:
-- Add student records
-- View student records
-- Edit student information
-- Delete student records
-
-The project demonstrates containerization and automation using Docker and Jenkins.
+This project demonstrates CRUD operations, containerized deployment, database integration, CI/CD automation, environment-based configuration, and multi-container application management.
 
 ---
 
-# Features
+## Project Architecture
 
-- Create Student Records
-- Read Student Data
-- Update Student Information
-- Delete Student Records
-- Dockerized Flask Application
-- Jenkins CI/CD Pipeline
-- GitHub Integration
-- Automated Docker Build & Deployment
+```text
+User
+  |
+Flask Application (Gunicorn)
+  |
+MySQL Database
+```
 
----
+Containerized Architecture:
 
-# Tech Stack
-
-| Technology | Purpose |
-|---|---|
-| Python | Backend Programming |
-| Flask | Web Framework |
-| SQLite | Database |
-| HTML/CSS | Frontend |
-| Docker | Containerization |
-| Jenkins | CI/CD Automation |
-| Git & GitHub | Version Control |
-
----
-
-# Project Structure
-
-```bash
-flask-student-registration-devops/
+```text
+Docker Compose
 │
-├── models/
-├── screenshots/
-├── static/
-├── templates/
+├── Flask Container
+│   ├── Flask
+│   ├── SQLAlchemy
+│   └── Gunicorn
+│
+└── MySQL Container
+    └── Persistent Volume
+```
+
+---
+
+## Features
+
+* Student Registration CRUD Operations
+* Create Student Records
+* View Registered Students
+* Update Student Information
+* Delete Student Records
+* Input Validation
+* MySQL Database Integration
+* SQLAlchemy ORM
+* Docker Containerization
+* Multi-Container Deployment using Docker Compose
+* Jenkins CI/CD Pipeline
+* Environment Variable Configuration
+* Persistent Database Storage
+* MySQL Health Checks
+* Gunicorn Production Server
+
+---
+
+## Technology Stack
+
+### Backend
+
+* Flask
+* SQLAlchemy
+* Gunicorn
+
+### Database
+
+* MySQL 8
+
+### DevOps
+
+* Docker
+* Docker Compose
+* Jenkins
+
+### Version Control
+
+* Git
+* GitHub
+
+### Frontend
+
+* HTML
+* CSS
+* Bootstrap
+
+---
+
+## Project Structure
+
+```text
+project_3_flaskapp/
 │
 ├── app.py
 ├── config.py
 ├── requirements.txt
 ├── Dockerfile
+├── docker-compose.yml
 ├── Jenkinsfile
+├── .env.example
 ├── README.md
-└── .gitignore
+│
+├── models/
+│   └── student.py
+│
+├── templates/
+│   ├── index.html
+│   └── students.html
+│
+├── static/
+│
+└── screenshots/
 ```
 
 ---
 
-# Application Workflow
+## Environment Variables
 
-1. User accesses Flask web application
-2. User performs CRUD operations
-3. Data is stored in SQLite database
-4. Docker container runs the application
-5. Jenkins automatically pulls code from GitHub
-6. Jenkins builds Docker image
-7. Jenkins deploys the container
+Create a .env file using the provided .env.example file.
+
+Example:
+
+```env
+SECRET_KEY=mysecretkey123
+
+DB_USER=student_app
+DB_PASSWORD=student123
+DB_NAME=student_registration
+DB_HOST=mysql
+DB_PORT=3306
+
+MYSQL_ROOT_PASSWORD=root123
+MYSQL_DATABASE=student_registration
+MYSQL_USER=student_app
+MYSQL_PASSWORD=student123
+```
 
 ---
 
-# How to Run Project Locally
+## Running the Application
 
-## Clone Repository
+### Clone Repository
 
 ```bash
 git clone https://github.com/kailashji24/flask-student-registration-devops.git
 cd flask-student-registration-devops
 ```
 
----
-
-## Create Virtual Environment
-
-### Windows
+### Create Environment File
 
 ```bash
-python -m venv venv
-venv\Scripts\activate
+cp .env.example .env
 ```
 
-### Linux/Mac
+### Start Application
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate
+docker compose up -d --build
 ```
 
----
-
-## Install Dependencies
+### Check Containers
 
 ```bash
-pip install -r requirements.txt
+docker compose ps
 ```
 
----
-
-## Run Flask Application
+### View Logs
 
 ```bash
-python app.py
+docker compose logs -f
 ```
 
-Application runs on:
-
-```bash
-http://127.0.0.1:5000
-```
-
----
-
-# Docker Setup
-
-## Build Docker Image
-
-```bash
-docker build -t flask-student-app .
-```
-
----
-
-## Run Docker Container
-
-```bash
-docker run -d -p 5000:5000 --name flask-student-container flask-student-app
-```
-
----
-
-## Stop Docker Container
-
-```bash
-docker stop flask-student-container
-```
-
----
-
-## Remove Docker Container
-
-```bash
-docker rm flask-student-container
-```
-
----
-
-# Jenkins Pipeline
-
-This project uses Jenkins for CI/CD automation.
-
-## Jenkins Pipeline Stages
-
-- Clone Repository
-- Build Docker Image
-- Stop Old Container
-- Remove Old Container
-- Run New Docker Container
-
----
-
-# Jenkinsfile
-
-```groovy
-pipeline {
-    agent any
-
-    stages {
-
-        stage('Clone Repository') {
-            steps {
-                git branch: 'main',
-                url: 'https://github.com/kailashji24/flask-student-registration-devops.git'
-            }
-        }
-
-        stage('Build Docker Image') {
-            steps {
-                bat 'docker build -t flask-student-app .'
-            }
-        }
-
-        stage('Stop Old Container') {
-            steps {
-                bat 'docker stop flask-student-container || exit 0'
-            }
-        }
-
-        stage('Remove Old Container') {
-            steps {
-                bat 'docker rm flask-student-container || exit 0'
-            }
-        }
-
-        stage('Run Docker Container') {
-            steps {
-                bat 'docker run -d -p 5000:5000 --name flask-student-container flask-student-app'
-            }
-        }
-    }
-}
-```
-
----
-
-# CI/CD Workflow
+### Access Application
 
 ```text
-Developer Pushes Code to GitHub
-            ↓
-Jenkins Pulls Latest Code
-            ↓
-Docker Image is Built
-            ↓
-Old Container is Removed
-            ↓
-New Container is Deployed
-            ↓
-Application Runs Automatically
+http://localhost:5000
 ```
 
 ---
 
-# Screenshots
+## Stopping the Application
 
-## Flask Application
+Stop containers:
 
-Add screenshots inside the `screenshots/` folder.
+```bash
+docker compose down
+```
 
-Example:
+Stop containers and remove database volume:
 
-```markdown
-![Flask App](screenshots/app-home.png)
+```bash
+docker compose down -v
 ```
 
 ---
 
 ## Jenkins Pipeline
 
-```markdown
-![Jenkins Pipeline](screenshots/jenkins-pipeline.png)
+The Jenkins pipeline automates:
+
+1. Source Code Checkout
+2. Docker Compose Validation
+3. Docker Image Build
+4. Container Deployment
+5. Service Verification
+
+Pipeline Stages:
+
+```text
+Clone Repository
+      ↓
+Validate Compose File
+      ↓
+Build Containers
+      ↓
+Deploy Application
+      ↓
+Verify Services
 ```
 
 ---
 
-## Docker Container
+## Docker Compose Services
 
-```markdown
-![Docker Container](screenshots/docker-container.png)
+### Flask Service
+
+* Flask Application
+* Gunicorn Web Server
+* SQLAlchemy ORM
+* Environment-Based Configuration
+
+### MySQL Service
+
+* MySQL 8 Database
+* Persistent Storage
+* Health Checks
+* Automatic Service Recovery
+
+---
+
+## Key DevOps Concepts Demonstrated
+
+* Containerization
+* Multi-Container Architecture
+* Infrastructure Automation
+* CI/CD Pipelines
+* Environment Management
+* Service Networking
+* Database Persistence
+* Health Monitoring
+* Production Web Server Deployment
+
+---
+
+## Screenshots
+
+Add project screenshots inside:
+
+```text
+screenshots/
 ```
 
----
+Example:
 
-# Future Improvements
-
-- Deploy application on AWS EC2
-- Use PostgreSQL/MySQL instead of SQLite
-- Add Authentication System
-- Implement Kubernetes Deployment
-- Add GitHub Actions
-- Add Monitoring using Prometheus & Grafana
+* Application Home Page
+* Student Registration Form
+* Student List Page
+* Docker Containers Running
+* Jenkins Successful Pipeline
+* Docker Compose Services
 
 ---
 
-# Learning Outcomes
+## Resume Project Description
 
-Through this project, I learned:
+Student Registration DevOps Platform
 
-- Flask CRUD application development
-- Docker containerization
-- Jenkins pipeline automation
-- CI/CD concepts
-- GitHub integration
-- DevOps workflow implementation
+Flask · MySQL · SQLAlchemy · Docker · Docker Compose · Jenkins · Gunicorn
+
+Developed a Student Registration CRUD application using Flask, SQLAlchemy, and MySQL. Containerized the application with Docker and implemented a multi-container architecture using Docker Compose. Configured persistent database storage, environment-based configuration management, health checks, and service networking. Built a Jenkins CI/CD pipeline to automate application build, validation, and deployment workflows. Deployed the application using Gunicorn as a production-grade WSGI server and managed service orchestration through Docker Compose.
 
 ---
 
-# Author
+## Author
 
-## Kailash Chaudhary
+Kailash Chaudhary
 
 GitHub:
 https://github.com/kailashji24
 
----
-
-# Repository Link
-
+Project Repository:
 https://github.com/kailashji24/flask-student-registration-devops
-
----
-
-# License
-
-This project is created for learning and educational purposes.

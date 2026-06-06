@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     stages {
-
         stage('Clone Repository') {
             steps {
                 git branch: 'main',
@@ -10,32 +9,34 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Validate Docker Compose') {
             steps {
-                bat 'docker build -t flask-student-app .'
+                bat 'docker compose config'
             }
         }
 
-        stage('Stop Old Container') {
+        stage('Build Services') {
             steps {
-                bat 'docker stop flask-student-container || exit 0'
-                bat 'docker rm flask-student-container || exit 0'
+                bat 'docker compose build --pull'
             }
         }
 
-        stage('Run Docker Container') {
+        stage('Deploy Services') {
             steps {
-                bat '''
-docker run -d ^
---name flask-student-container ^
--p 5000:5000 ^
--e DB_HOST=host.docker.internal ^
--e DB_USER=root ^
--e DB_PASSWORD=Root123 ^
--e DB_NAME=student_registration ^
-flask-student-app
-'''
+                bat 'docker compose up -d --remove-orphans'
             }
+        }
+
+        stage('Show Service Status') {
+            steps {
+                bat 'docker compose ps'
+            }
+        }
+    }
+
+    post {
+        failure {
+            bat 'docker compose logs --tail=100'
         }
     }
 }
